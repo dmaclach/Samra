@@ -75,6 +75,27 @@ class RenditionCollectionViewItem: NSCollectionViewItem {
             /*}*/
             
             representationPreview = imageView
+
+        case .rawData(let data):
+            var visibleString = "No Preview Available"
+            if let string = String(data:data, encoding:.utf8) {
+                visibleString = string.count > 500 ? String(string.prefix(500)) : string
+            }
+            let textField = NSTextField(wrappingLabelWithString:visibleString)
+            textField.isBordered = true
+            textField.isEditable = false
+            textField.isSelectable = false
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.maximumNumberOfLines = 5
+            view.addSubview(textField)
+            representationPreview = textField
+            NSLayoutConstraint.activate([
+                textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                textField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -12.34),
+                textField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
+                textField.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -34)
+            ])
+
         case nil:
             representationPreview = .init()
         }

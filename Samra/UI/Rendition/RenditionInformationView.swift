@@ -69,6 +69,19 @@ struct RenditionInformationView: View {
             Circle()
                 .fill(Color(NSColor(cgColor: cgColor)!))
                 .frame(width: 130, height: 230, alignment: .center)
+
+        case .rawData(let data):
+            if let string = String(data:data, encoding:.utf8) {
+                Text(String(string.prefix(1024)))
+                    .font(.body)
+                    .padding(5)
+            } else {
+                Text("No Preview Available")
+                    .font(.title.italic())
+                    .padding(30)
+            }
+
+
         default:
             Text("No Preview Available.")
                 .font(.title.italic())
