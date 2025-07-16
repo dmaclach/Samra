@@ -101,11 +101,35 @@ struct DetailItemSection: Hashable {
             var blue: CGFloat = 0
             var alpha: CGFloat = 0
             nsColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-            
+
             items.append(DetailItemSection(sectionHeader: "Color Attributes", items: [
                 DetailItem(primaryText: "Red", secondaryText: Int(red * 255)),
                 DetailItem(primaryText: "Green", secondaryText: Int(green * 255)),
                 DetailItem(primaryText: "Blue", secondaryText: Int(blue * 255)),
+            ]))
+
+        case .svg, .pdf:
+            items.append(DetailItemSection(sectionHeader: "Base Attributes", items: [
+                DetailItem(primaryText: "Rendition Name", secondaryText: cuiRend.name()),
+                DetailItem(primaryText: "Lookup Name", secondaryText: namedLookup.name),
+                sizeOnDisk,
+            ]))
+            var size = CGSizeZero
+            switch rendition.type {
+            case .svg:
+                if let svgDoc = cuiRend.svgDocument() {
+                    size = CGSVGDocumentGetCanvasSize(svgDoc)
+                }
+            case .pdf:
+                if let pdfDoc = cuiRend.pdfDocument()?.takeUnretainedValue(), let page = pdfDoc.page(at:1) {
+                    size = page.getBoxRect(.artBox).size
+                }
+            default:
+                break
+            }
+            items.append(DetailItemSection(sectionHeader: "Dimensions", items: [
+                DetailItem(primaryText: "Width", secondaryText: size.width),
+                DetailItem(primaryText: "Height", secondaryText: size.height),
             ]))
 
         default:
