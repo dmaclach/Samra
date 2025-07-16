@@ -27,9 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
-        NSLog("I crash through glass ceilings, I break through closed doors.")
-        
+        // Insert code here to initialize your application        
         if Preferences.showWelcomeVCOnLaunch {
             WindowController(kind: .welcome).showWindow(self)
         }
