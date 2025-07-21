@@ -156,8 +156,6 @@ extension WindowController: NSToolbarDelegate {
         case .init("flexSpace"):
             #warning("Fix this (want flexible space between search bar and sidebar)")
             let toolbarItem = NSToolbarItem(itemIdentifier: NSToolbarItem.Identifier(rawValue: "flexSpace"))
-            toolbarItem.minSize = NSSize(width: 1, height: 1)
-            toolbarItem.maxSize = NSSize(width: 1000, height: 1)
             return toolbarItem
         default:
             return NSToolbarItem(itemIdentifier: itemIdentifier)
